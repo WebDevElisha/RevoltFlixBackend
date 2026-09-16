@@ -3,7 +3,7 @@ export default async function handler(request, response) {
     response.setHeader('Access-Control-Allow-Methods', 'GET');
 
     const apiKey = process.env.TMDB_API_KEY;
-    const searchQuery = request.query.q; /
+    const searchQuery = request.query.q;
 
     try {
         let url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`;
