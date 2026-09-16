@@ -3,9 +3,16 @@ export default async function handler(request, response) {
     response.setHeader('Access-Control-Allow-Methods', 'GET');
 
     const apiKey = process.env.TMDB_API_KEY;
+    const searchQuery = request.query.q; /
 
     try {
-        const apiRes = await fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`);
+        let url = `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`;
+        
+        if (searchQuery) {
+            url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(searchQuery)}`;
+        }
+
+        const apiRes = await fetch(url);
         if (!apiRes.ok) throw new Error('Failed to fetch from TMDB');
         
         const data = await apiRes.json();
